@@ -56,13 +56,14 @@ html, body {
 ═══════════════════════════════════════════════ */
 
 #depth1 {
+  /* 100vh 대신 min-height 사용 — 모바일 브라우저 safe */
   position: fixed; inset: 0;
   background: var(--bg);
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* 상하 패딩 — 레퍼런스 기준 */
-  padding: 9vh 0 48px;
+  /* 상단 여백: 자연스럽게 */
+  padding: 5vh 0 4vh;
   z-index: 10;
   opacity: 1;
   transition: opacity 0.55s ease-in-out;
@@ -70,10 +71,7 @@ html, body {
 }
 #depth1.fade-out { opacity:0; pointer-events:none; }
 
-/* ── 중앙 블록: INVITATION + 포스터를 하나로 묶음
-   flex:1 로 상하 여백을 제외한 나머지 공간 사용
-   내부에서 세로 정렬: 전체를 위-아래 여백 균등하게
-── */
+/* ── 포스터 블록 ── */
 .poster-block {
   flex: 1;
   display: flex;
@@ -81,33 +79,33 @@ html, body {
   align-items: center;
   justify-content: flex-start;
   width: 100%;
-  /* 아이콘이 블록 밖으로 나가지 않도록 */
   position: relative;
   overflow: visible;
+  /* 포스터 높이가 넘치지 않도록 최소 높이 제한 */
+  min-height: 0;
 }
 
-/* INVITATION: 포스터 바로 위, 거의 붙어있게 */
+/* INVITATION */
 .invitation-text {
   font-family: 'NewTitle', sans-serif;
   font-weight: 700;
-  font-size: clamp(38px, 11vw, 50px);
+  font-size: clamp(32px, 9.5vw, 46px);
   color: var(--green);
   letter-spacing: 0.06em;
   line-height: 1;
   text-align: center;
-  /* 포스터와의 간격: top gap = 18px */
-  margin-bottom: 18px;
+  margin-bottom: 14px;
   flex-shrink: 0;
-  /* 아이콘이 이 영역에 들어오지 않도록 z-index */
   position: relative;
   z-index: 5;
 }
 
-/* 포스터 씬: 아이콘 포함 */
+/* 포스터 씬 */
 .poster-scene {
   position: relative;
-  /* 포스터 크기 + 아이콘 overflow 공간 */
-  width: min(72vw, 280px);
+  /* 고정 max-width로 모바일에서 넘치지 않게 */
+  width: 75%;
+  max-width: 280px;
   flex-shrink: 0;
 }
 
@@ -123,6 +121,9 @@ html, body {
   width: 100%;
   display: block;
   border-radius: 2px;
+  /* 포스터가 화면을 넘치지 않도록 */
+  max-height: 55vh;
+  object-fit: contain;
 }
 
 /* 테이프 */
@@ -137,38 +138,18 @@ html, body {
 .tape-tl { width:58px; height:15px; top:-6px; left:-15px; transform:rotate(-12deg); }
 .tape-br { width:58px; height:15px; bottom:-6px; right:-15px; transform:rotate(-12deg); }
 
-/* ── 아이콘: poster-scene 기준 absolute
-   포스터 씬 밖으로 overflow해서 포스터 좌우에 배치
-   INVITATION 영역(poster-scene 위쪽)에는 절대 걸치지 않음
-   → top 값을 10% 이상으로 유지
-── */
+/* 아이콘: poster-scene 기준 absolute */
 .gfx {
   position: absolute;
   pointer-events: none;
   z-index: 2;
 }
 
-/* 레퍼런스 이미지 기준 아이콘 위치:
-   우상단 초록 4점: 포스터 우상단 바깥
-   우상단 주황 단일: 초록 클러스터 왼쪽 아래
-   좌중상 주황 4점: 포스터 좌측 중간
-   우하단 초록 2점: 포스터 우하단
-   좌하단 주황+초록: 포스터 좌하단 */
-.gfx-tr-green {
-  top: 8%; right: -18%;
-}
-.gfx-tr-orange {
-  top: 22%; right: -8%;
-}
-.gfx-left-orange {
-  top: 36%; left: -18%;
-}
-.gfx-br-green {
-  bottom: 14%; right: -14%;
-}
-.gfx-bl-mix {
-  bottom: 16%; left: -10%;
-}
+.gfx-tr-green    { top: 8%;    right: -18%; }
+.gfx-tr-orange   { top: 22%;   right: -8%;  }
+.gfx-left-orange { top: 36%;   left:  -18%; }
+.gfx-br-green    { bottom: 14%; right: -14%; }
+.gfx-bl-mix      { bottom: 16%; left:  -10%; }
 
 /* 아이콘 dot 개별 애니메이션 (calm) */
 @keyframes cf-a { 0%,100%{transform:translateY(0);opacity:.90;} 50%{transform:translateY(-2px);opacity:.55;} }
@@ -187,15 +168,15 @@ html, body {
 .d-g{animation:cf-a 7.0s ease-in-out infinite 0.9s;}
 .d-h{animation:cf-c 5.4s ease-in-out infinite 2.4s;}
 
-/* ── Enter 버튼 영역 ── */
+/* ── Enter 버튼: 자연스러운 흐름, 음수 마진 제거 ── */
 .enter-area {
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 8px;
-  /* 버튼 그룹 포스터 쪽으로 크게 올림 */
-  margin-top: -250px;
+  /* 포스터와의 간격: 자연스럽게 */
+  margin-top: 16px;
 }
 
 .enter-btn {
