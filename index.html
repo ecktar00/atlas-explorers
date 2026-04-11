@@ -103,9 +103,8 @@ html, body {
 /* 포스터 씬 */
 .poster-scene {
   position: relative;
-  /* 고정 max-width로 모바일에서 넘치지 않게 */
   width: 75%;
-  max-width: 280px;
+  max-width: 292px;
   flex-shrink: 0;
 }
 
@@ -121,12 +120,11 @@ html, body {
   width: 100%;
   display: block;
   border-radius: 2px;
-  /* 포스터가 화면을 넘치지 않도록 */
   max-height: 55vh;
   object-fit: contain;
 }
 
-/* 테이프 */
+/* 테이프: poster-wrap 기준 absolute → 모든 기기에서 포스터 모서리에 고정 */
 .tape {
   position: absolute;
   background: var(--tape); opacity: 0.80; border-radius: 2px;
@@ -135,8 +133,8 @@ html, body {
     rgba(255,255,255,0.14) 3px, rgba(255,255,255,0.14) 4px);
   z-index: 4; pointer-events: none;
 }
-.tape-tl { width:58px; height:15px; top:-6px; left:-15px; transform:rotate(-12deg); }
-.tape-br { width:58px; height:15px; bottom:-6px; right:-15px; transform:rotate(-12deg); }
+.tape-tl { width:58px; height:15px; top:-8px; left:-8px; transform:rotate(-12deg); }
+.tape-br { width:58px; height:15px; bottom:-8px; right:-8px; transform:rotate(-12deg); }
 
 /* 아이콘: poster-scene 기준 absolute */
 .gfx {
